@@ -46,7 +46,6 @@ class zenodo:
         if "deposition" in kwargs:
             self.deposition = kwargs.pop("deposition")
 
-
     def _api_request(
         self,
         url,
@@ -144,11 +143,11 @@ class depositions(zenodo):
         return resp.status_code
 
 
-class deposition_files(zenodo):
+class deposition_files(depositions):
     def __init__(self, *args, access_token, **kwargs):
 
-        zenodo.__init__(self, *args, access_token=access_token, **kwargs)
-
+        depositions.__init__(self, *args, access_token=access_token, **kwargs)
+        self.bucket = self.retrieve()["links"]["bucket"]
 
     def list(self):
         resp = self._api_request(
@@ -189,13 +188,3 @@ class deposition_files(zenodo):
             raise AssertionError(
                 "File checksums do not match for remote file id: {}".format(stats.id)
             )
-
-    
-
-    # @property
-    # def list(self):
-    #     return [i for i in self.get_files()]
-
-    # @property
-    # def name(self):
-    #     return self.local_file()
