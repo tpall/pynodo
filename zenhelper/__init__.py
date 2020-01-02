@@ -33,6 +33,16 @@ class zenodo:
         else:
             self._baseurl = "https://zenodo.org"
 
+        # Check if access token is valid
+        try:
+            self.try_access()
+        except Exception as e:
+            print(
+                "The Zenodo server could not verify that you are authorized to access your resources. You supplied the wrong credentials (e.g. a bad access_token): {}".format(
+                    e
+                )
+            )
+
         if "deposition" in kwargs:
             self.deposition = kwargs.pop("deposition")
             self.bucket = self.get_bucket()
@@ -105,15 +115,6 @@ class depositions(zenodo):
     def __init__(self, *args, access_token, **kwargs):
 
         zenodo.__init__(self, *args, access_token=access_token, **kwargs)
-        # Check if access token is valid
-        try:
-            self.try_access()
-        except Exception as e:
-            print(
-                "The Zenodo server could not verify that you are authorized to access your resources. You supplied the wrong credentials (e.g. a bad access_token): {}".format(
-                    e
-                )
-            )
 
         # else:
         #     # Creating a new deposition, as deposition id was not supplied.
@@ -175,8 +176,7 @@ class depositions(zenodo):
         except AttributeError as e:
             return "You need to supply deposition id: {}".format(e)
         resp = self._api_request(
-            self._baseurl + "/api/deposit/depositions/{}".format(d),
-            method="DELETE",
+            self._baseurl + "/api/deposit/depositions/{}".format(d), method="DELETE",
         )
         return resp.status_code
 
