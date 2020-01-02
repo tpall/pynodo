@@ -124,12 +124,12 @@ class depositions(zenodo):
             self._baseurl + "/api/deposit/depositions", params=params, json=True,
         )
 
-    def create(self, data="{}"):
+    def create(self, data={}):
         resp = self._api_request(
             self._baseurl + "/api/deposit/depositions",
             method="POST",
             headers={"Content-Type": "application/json"},
-            data=data,
+            data=json.dumps(data),
             json=True,
         )
         return {
@@ -141,33 +141,41 @@ class depositions(zenodo):
     def retrieve(self, deposition=None):
         try:
             if deposition is not None:
-                deposition = deposition
+                d = deposition
             else:
-                deposition = self.deposition
+                d = self.deposition
         except AttributeError as e:
             return "You need to supply deposition id: {}".format(e)
         return self._api_request(
-            self._baseurl + "/api/deposit/depositions/{}".format(deposition), json=True,
+            self._baseurl + "/api/deposit/depositions/{}".format(d), json=True,
         )
 
-    def update(self, data):
+    def update(self, data, deposition=None):
         try:
             if deposition is not None:
-                deposition = deposition
+                d = deposition
             else:
-                deposition = self.deposition
+                d = self.deposition
         except AttributeError as e:
             return "You need to supply deposition id: {}".format(e)
         return self._api_request(
-            self._baseurl + "/api/deposit/depositions/{}".format(deposition),
+            self._baseurl + "/api/deposit/depositions/{}".format(d),
+            method="PUT",
             headers={"Content-Type": "application/json"},
             data=json.dumps(data),
             json=True,
         )
 
-    def delete(self):
+    def delete(self, deposition=None):
+        try:
+            if deposition is not None:
+                d = deposition
+            else:
+                d = self.deposition
+        except AttributeError as e:
+            return "You need to supply deposition id: {}".format(e)
         resp = self._api_request(
-            self._baseurl + "/api/deposit/depositions/{}".format(self.deposition),
+            self._baseurl + "/api/deposit/depositions/{}".format(d),
             method="DELETE",
         )
         return resp.status_code
