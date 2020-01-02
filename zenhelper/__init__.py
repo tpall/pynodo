@@ -116,10 +116,6 @@ class depositions(zenodo):
 
         zenodo.__init__(self, *args, access_token=access_token, **kwargs)
 
-        # else:
-        #     # Creating a new deposition, as deposition id was not supplied.
-        #     self.deposition, self.bucket = self.create_deposition().values()
-
     def list(self, params=None):
         return self._api_request(
             self._baseurl + "/api/deposit/depositions", params=params, json=True,
