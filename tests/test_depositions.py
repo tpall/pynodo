@@ -28,12 +28,3 @@ print(ret_depo)
 updates = {"metadata": {"title": "Modified upload", "upload_type": "dataset", "description": "This is updated upload", "creators": [{"name": "Päll, Taavi", "affiliation": "UT"}, {"name": "Sus, Scrofa", "affiliation": "Mets"}]}}
 updated_depo = zen.update(deposition=new_depo["id"], data=updates)
 print(updated_depo)
-
-zen_id = zenhelper.depositions(access_token=os.environ["ZENODO_SANDBOX_PAT"], deposition=new_depo["id"], sandbox=True)
-print(zen_id.list())
-
-id_new_depo = zen_id.create(data=data)
-print(id_new_depo)
-
-id_ret_depo = zen_id.retrieve()
-print(id_ret_depo)
