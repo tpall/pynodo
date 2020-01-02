@@ -45,7 +45,7 @@ class zenodo:
 
         if "deposition" in kwargs:
             self.deposition = kwargs.pop("deposition")
-            self.bucket = self.get_bucket()
+
 
     def _api_request(
         self,
@@ -76,39 +76,6 @@ class zenodo:
 
     def try_access(self):
         return self._api_request(self._baseurl + "/api/deposit/depositions", json=True,)
-
-    def get_bucket(self):
-        resp = self._api_request(
-            self._baseurl + "/api/deposit/depositions/{}".format(self.deposition),
-            headers={"Content-Type": "application/json"},
-            json=True,
-        )
-        return resp["links"]["bucket"]
-
-    def get_files(self):
-        files = self._api_request(
-            self._baseurl + "/api/deposit/depositions/{}/files".format(self.deposition),
-            headers={"Content-Type": "application/json"},
-            json=True,
-        )
-        return {
-            os.path.basename(f["filename"]): ZenFileInfo(
-                f["checksum"], int(f["filesize"]), f["id"], f["links"]["download"]
-            )
-            for f in files
-        }
-
-    def _stats(self):
-        return self.get_files()[os.path.basename(self.local_file())]
-
-    def exists(self):
-        return os.path.basename(self.local_file()) in self.get_files()
-
-    def size(self):
-        if self.exists():
-            return self._stats().filesize
-        else:
-            return self._iofile.size_local
 
 
 class depositions(zenodo):
@@ -176,6 +143,34 @@ class depositions(zenodo):
         )
         return resp.status_code
 
+
+class deposition_files(zenodo):
+    def __init__(self, *args, access_token, **kwargs):
+
+        zenodo.__init__(self, *args, access_token=access_token, **kwargs)
+
+
+    def list(self):
+        resp = self._api_request(
+            self._baseurl + "/api/deposit/depositions/{}/files".format(self.deposition),
+            headers={"Content-Type": "application/json"},
+            json=True,
+        )
+        return {
+            os.path.basename(f["filename"]): ZenFileInfo(
+                f["checksum"], int(f["filesize"]), f["id"], f["links"]["download"]
+            )
+            for f in resp
+        }
+
+    def upload(self, path):
+        with open(path, "rb") as h:
+            self._api_request(
+                self.bucket + "/{}".format(os.path.basename(path)),
+                method="PUT",
+                data=h,
+            )
+
     def download(self):
         stats = self._stats()
         download_url = stats.download
@@ -195,13 +190,7 @@ class depositions(zenodo):
                 "File checksums do not match for remote file id: {}".format(stats.id)
             )
 
-    def upload(self):
-        with open(self.local_file(), "rb") as lf:
-            self._api_request(
-                self.bucket + "/{}".format(os.path.basename(self.remote_file())),
-                method="PUT",
-                data=lf,
-            )
+    
 
     # @property
     # def list(self):
