@@ -195,7 +195,7 @@ class depositions(zenodo):
         local_md5 = local_md5.hexdigest()
 
         if local_md5 != stats.checksum:
-            raise ZenodoFileException(
+            raise AssertionError(
                 "File checksums do not match for remote file id: {}".format(stats.id)
             )
 
