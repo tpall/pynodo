@@ -62,7 +62,7 @@ updates = {
 }
 updated_depo = zen.update(deposition=new_depo["id"], data=updates)
 
-# Delete deposition
+# Delete deposition (status code 204 is success)
 zen.delete(new_depo["id"])
 ```
 
@@ -99,4 +99,7 @@ files = zen_files.files
 
 # Download file from deposition (second argument with download folder is optional)
 zen_files.download("uploaded_file.txt", "tmp")
+
+# Delete file (status code 204 is success)
+zen_files.delete("uploaded_file.txt")
 ```

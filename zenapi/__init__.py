@@ -193,6 +193,16 @@ class DepositionFiles(Depositions):
                 )
             )
 
+    def delete(self, remote_file):
+        fileinfo = self.files[remote_file]
+        resp = self._api_request(
+            self._baseurl
+            + self._path
+            + "/{}/files/{}".format(self.deposition, fileinfo.id),
+            method="DELETE",
+        )
+        return resp.status_code
+
     @property
     def files(self):
         return self.list()

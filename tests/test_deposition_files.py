@@ -22,10 +22,15 @@ zen_files = zenapi.DepositionFiles(
 zen_files.upload("tests/upload.txt", "uploaded_file.txt")
 
 # List files
-files = zen_files.files
+print(zen_files.files)
+
 
 # Download file
 zen_files.download("uploaded_file.txt", "tmp")
+
+# Delete file
+zen_files.delete("uploaded_file.txt")
+print(zen_files.files)
 
 # Cleanup
 zen.delete(deposition=new_depo["id"])
