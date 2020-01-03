@@ -15,18 +15,20 @@ zen_files = zenapi.DepositionFiles(
     deposition=new_depo.id, access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True
 )
 
+UPLOADED = "uploaded_file.txt"
+
 # Upload file
-zen_files.upload("tests/upload.txt", "uploaded_file.txt")
+zen_files.upload("tests/upload.txt", UPLOADED)
 
 # List files
 print(zen_files.files)
 
 
 # Download file
-zen_files.download("uploaded_file.txt", "tests")
+zen_files.download(UPLOADED, "tests")
 
 # Delete file
-zen_files.delete("uploaded_file.txt")
+zen_files.delete(UPLOADED)
 print(zen_files.files)
 
 # Cleanup

@@ -34,6 +34,8 @@ class Zenodo(metaclass=ABCMeta):
         else:
             self._baseurl = "https://zenodo.org"
         self._path = "/api/deposit/depositions"
+        self._application_json = {"Content-Type": "application/json"}
+        self._missing_deposition_id_error = "You need to supply deposition id: {}"
 
         # Check if access token is valid
         try:
@@ -92,7 +94,7 @@ class Depositions(Zenodo):
         resp = self._api_request(
             self._baseurl + self._path,
             method="POST",
-            headers={"Content-Type": "application/json"},
+            headers=self._application_json,
             data=json.dumps(data),
             json=True,
         )
@@ -105,7 +107,7 @@ class Depositions(Zenodo):
             else:
                 d = self.deposition
         except AttributeError as e:
-            return "You need to supply deposition id: {}".format(e)
+            return self._missing_deposition_id_error.format(e)
         return self._api_request(
             self._baseurl + self._path + "/{}".format(d), json=True
         )
@@ -117,11 +119,11 @@ class Depositions(Zenodo):
             else:
                 d = self.deposition
         except AttributeError as e:
-            return "You need to supply deposition id: {}".format(e)
+            return self._missing_deposition_id_error.format(e)
         return self._api_request(
             self._baseurl + self._path + "/{}".format(d),
             method="PUT",
-            headers={"Content-Type": "application/json"},
+            headers=self._application_json,
             data=json.dumps(data),
             json=True,
         )
@@ -133,7 +135,7 @@ class Depositions(Zenodo):
             else:
                 d = self.deposition
         except AttributeError as e:
-            return "You need to supply deposition id: {}".format(e)
+            return self._missing_deposition_id_error.format(e)
         resp = self._api_request(
             self._baseurl + self._path + "/{}".format(d), method="DELETE"
         )
@@ -148,7 +150,7 @@ class DepositionFiles(Depositions):
     def list(self):
         resp = self._api_request(
             self._baseurl + self._path + "/{}/files".format(self.deposition),
-            headers={"Content-Type": "application/json"},
+            headers=self._application_json,
             json=True,
         )
         return {
