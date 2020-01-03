@@ -35,7 +35,7 @@ class zenodo:
 
         # Check if access token is valid
         try:
-            self.try_access()
+            self.try_access
         except Exception as e:
             print(
                 "The Zenodo server could not verify that you are authorized to access your resources. You supplied the wrong credentials (e.g. a bad access_token): {}".format(
@@ -73,6 +73,7 @@ class zenodo:
         else:
             return r
 
+    @property
     def try_access(self):
         return self._api_request(self._baseurl + "/api/deposit/depositions", json=True,)
 
@@ -147,7 +148,6 @@ class deposition_files(depositions):
     def __init__(self, *args, access_token, **kwargs):
 
         depositions.__init__(self, *args, access_token=access_token, **kwargs)
-        self.bucket = self.retrieve()["links"]["bucket"]
 
     def list(self):
         resp = self._api_request(
@@ -162,29 +162,40 @@ class deposition_files(depositions):
             for f in resp
         }
 
-    def upload(self, path):
-        with open(path, "rb") as h:
+    def upload(self, local_file, remote_file=None):
+        if remote_file is None:
+            remote_file = local_file
+        with open(local_file, "rb") as h:
             self._api_request(
-                self.bucket + "/{}".format(os.path.basename(path)),
+                self.bucket + "/{}".format(os.path.basename(remote_file)),
                 method="PUT",
                 data=h,
             )
 
-    def download(self):
-        stats = self._stats()
-        download_url = stats.download
-        r = self._api_request(download_url)
+    def download(self, remote_file, dest="."):
+        fileinfo = self.files[remote_file]
+        r = self._api_request(fileinfo.download)
 
         local_md5 = hashlib.md5()
 
         # Download file.
-        with open(self.local_file(), "wb") as rf:
+        with open(os.path.join(dest, remote_file), "wb") as rf:
             for chunk in r.iter_content(chunk_size=1024 * 1024 * 10):
                 local_md5.update(chunk)
                 rf.write(chunk)
         local_md5 = local_md5.hexdigest()
 
-        if local_md5 != stats.checksum:
+        if local_md5 != fileinfo.checksum:
             raise AssertionError(
-                "File checksums do not match for remote file id: {}".format(stats.id)
+                "File checksums do not match for remote file: {} with id: {}".format(
+                    remote_file, fileinfo.id
+                )
             )
+
+    @property
+    def files(self):
+        return self.list()
+
+    @property
+    def bucket(self):
+        return self.retrieve()["links"]["bucket"]
