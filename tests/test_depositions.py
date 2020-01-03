@@ -70,7 +70,7 @@ def test_depositions_update(depositions_object, test_deposition):
             "title": "Modified upload",
             "upload_type": "dataset",
             "description": "This is updated upload",
-            "creators": [{"name": "Felis, Catus", "affiliation": "Sofa"},],
+            "creators": [{"name": "Felis, Catus", "affiliation": "Sofa"}],
         }
     }
     resp = depositions_object.update(deposition=test_deposition.id, data=updates)

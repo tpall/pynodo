@@ -78,7 +78,7 @@ class Zenodo(metaclass=ABCMeta):
 
     @property
     def _try_access(self):
-        return self._api_request(self._baseurl + self._path, json=True,)
+        return self._api_request(self._baseurl + self._path, json=True)
 
 
 class Depositions(Zenodo):
@@ -87,7 +87,7 @@ class Depositions(Zenodo):
         super().__init__(self, *args, access_token=access_token, **kwargs)
 
     def list(self, params=None):
-        return self._api_request(self._baseurl + self._path, params=params, json=True,)
+        return self._api_request(self._baseurl + self._path, params=params, json=True)
 
     def create(self, data={}):
         resp = self._api_request(
@@ -108,7 +108,7 @@ class Depositions(Zenodo):
         except AttributeError as e:
             return "You need to supply deposition id: {}".format(e)
         return self._api_request(
-            self._baseurl + self._path + "/{}".format(d), json=True,
+            self._baseurl + self._path + "/{}".format(d), json=True
         )
 
     def update(self, data, deposition=None):
@@ -136,7 +136,7 @@ class Depositions(Zenodo):
         except AttributeError as e:
             return "You need to supply deposition id: {}".format(e)
         resp = self._api_request(
-            self._baseurl + self._path + "/{}".format(d), method="DELETE",
+            self._baseurl + self._path + "/{}".format(d), method="DELETE"
         )
         return resp.status_code
 

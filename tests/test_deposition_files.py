@@ -13,7 +13,7 @@ ret_depo = zen.retrieve(deposition=new_depo.id)
 
 # Create new instance for listing files
 zen_files = zenapi.DepositionFiles(
-    deposition=new_depo.id, access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True,
+    deposition=new_depo.id, access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True
 )
 
 # Upload file
