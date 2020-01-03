@@ -9,18 +9,20 @@ from collections import namedtuple
 import requests
 import json
 from requests.exceptions import HTTPError
+from abc import ABCMeta, abstractmethod
 
 
 ZenFileInfo = namedtuple("ZenFileInfo", ["checksum", "filesize", "id", "download"])
 
 
-class zenodo:
+class zenodo(metaclass=ABCMeta):
     """
     Zenodo personal access token must be passed in as 'access_token' argument.
     Separate registration and access token is needed for Zenodo sandbox
     environment at https://sandbox.zenodo.org.
     """
 
+    @abstractmethod
     def __init__(self, *args, access_token, **kwargs):
         self._access_token = access_token
         if "sandbox" in kwargs:
