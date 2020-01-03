@@ -53,4 +53,5 @@ jobs:
     - name: Test with pytest
       run: |
         pip install pytest
+        export ZENODO_SANDBOX_PAT=${{ secrets.ZENODO_SANDBOX_PAT }}
         pytest tests/test*.py -v -x
