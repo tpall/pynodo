@@ -1,6 +1,6 @@
 # Zenapi
 
-Python wrapper for Zenodo API for working with depositions and files.
+Python wrapper for Zenodo REST API for working with Zenodo depositions and files.
 
 ## Install
 
@@ -14,11 +14,16 @@ pip install .
 
 ## Usage
 
-Zenodo access token <https://zenodo.org> with write scope is necessary to access depositions and files. Separate token is neccessary for zenodo sandbox environment <https://sandbox.zenodo.org>. Sandbox can be switched by setting `sandbox=True` when initiating *zenapi* instance.
+Zenodo access token <https://zenodo.org> with write scope is necessary to access depositions and files. 
+Separate token is neccessary for zenodo sandbox environment <https://sandbox.zenodo.org>. 
+Sandbox can be switched by setting `sandbox=True` when initiating *zenapi* instance.
 
 - Depositions can be accessed using `zenapi.Depositions()` class. 
 
 - Files in a deposition can be accessed using `zenapi.DepositionFiles()` class.
+
+`zenapi.Depositions().create()` and `zenapi.DepositionFiles().files()` return namedtuple.
+Other functions return either json response or status code (delete).
 
 ### Working with Depositions
 
