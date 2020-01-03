@@ -87,9 +87,7 @@ class Depositions(Zenodo):
         super().__init__(self, *args, access_token=access_token, **kwargs)
 
     def list(self, params=None):
-        return self._api_request(
-            self._baseurl + self._path, params=params, json=True,
-        )
+        return self._api_request(self._baseurl + self._path, params=params, json=True,)
 
     def create(self, data={}):
         resp = self._api_request(

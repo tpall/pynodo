@@ -8,16 +8,20 @@ zen = zenapi.Depositions(access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=
 # Create new instance
 new_depo = zen.create()
 
-# Retrive deposition 
+# Retrive deposition
 ret_depo = zen.retrieve(deposition=new_depo["id"])
 
 # Create new instance for listing files
-zen_files = zenapi.DepositionFiles(deposition=new_depo["id"], access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True)
+zen_files = zenapi.DepositionFiles(
+    deposition=new_depo["id"],
+    access_token=os.environ["ZENODO_SANDBOX_PAT"],
+    sandbox=True,
+)
 
 # Upload file
 zen_files.upload("tests/upload.txt", "uploaded_file.txt")
 
-# List files 
+# List files
 files = zen_files.files
 
 # Download file
