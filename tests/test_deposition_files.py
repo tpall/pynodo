@@ -24,7 +24,7 @@ print(zen_files.files)
 
 
 # Download file
-zen_files.download("uploaded_file.txt", "tmp")
+zen_files.download("uploaded_file.txt", "tests")
 
 # Delete file
 zen_files.delete("uploaded_file.txt")
