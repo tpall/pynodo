@@ -1,14 +1,14 @@
-import zenhelper
+import zenapi
 import os
 import json
 
 try:
-    zen_base = zenhelper.Zenodo(access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True)
+    zen_base = zenapi.Zenodo(access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True)
 except Exception as e:
     print(e)
 
 # Create zenodo (sandbox) instance 
-zen = zenhelper.Depositions(access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True)
+zen = zenapi.Depositions(access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True)
 
 # List user depositions
 depos = zen.list(params={"size": 50})
