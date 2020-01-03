@@ -1,3 +1,2 @@
 requests==2.22.0
 pytest==5.3.2
--e git+git@github.com:tpall/zenapi.git#egg=zenapi
