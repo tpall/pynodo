@@ -8,4 +8,7 @@ setup(name='zenapi',
       author_email='tapa741@gmail.com',
       license='MIT',
       packages=['zenapi'],
+      install_requires=[
+          'requests',
+      ],
       zip_safe=False)
