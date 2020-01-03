@@ -1,3 +1,6 @@
+
+![](https://github.com/tpall/zenapi/workflows/CI/badge.svg)
+
 # Zenapi
 
 Python wrapper for Zenodo REST API for working with Zenodo depositions and files.
