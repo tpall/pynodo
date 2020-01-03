@@ -8,7 +8,6 @@ import hashlib
 import requests
 import json
 from collections import namedtuple
-from requests.exceptions import HTTPError
 from abc import ABCMeta, abstractmethod
 
 ZenDepoInfo = namedtuple("ZenDepoInfo", "id title bucket")

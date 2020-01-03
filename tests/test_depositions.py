@@ -1,6 +1,5 @@
 import zenapi
 import os
-import json
 import pytest
 
 # Should fail

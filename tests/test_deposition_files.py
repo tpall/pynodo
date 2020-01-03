@@ -1,6 +1,5 @@
 import zenapi
 import os
-import json
 
 # Create zenodo instance
 zen = zenapi.Depositions(access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True)
