@@ -6,7 +6,7 @@ import json
 zen = zenhelper.depositions(access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True)
 
 # List user depositions
-depos = zen.list(params={"size": 20})
+depos = zen.list(params={"size": 50})
 for d in depos:
     print("title:{}, id: {}".format(d["title"], d["id"]))
     zen.delete(d["id"])

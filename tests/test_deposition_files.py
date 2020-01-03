@@ -4,7 +4,6 @@ import json
 
 # Create zenodo instance
 zen = zenhelper.depositions(access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True)
-print(zen.list())
 
 # Create new instance
 new_depo = zen.create()
@@ -15,9 +14,14 @@ ret_depo = zen.retrieve(deposition=new_depo["id"])
 # Create new instance for listing files
 zen_files = zenhelper.deposition_files(deposition=new_depo["id"], access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True)
 
+# Upload file
+zen_files.upload("tests/upload.txt", "uploaded_file.txt")
+
 # List files 
-files = zen_files.list()
-print(files)
+files = zen_files.files
+
+# Download file
+zen_files.download("uploaded_file.txt", "tmp")
 
 # Cleanup
 zen.delete(deposition=new_depo["id"])
