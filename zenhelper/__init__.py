@@ -81,7 +81,7 @@ class zenodo:
 class depositions(zenodo):
     def __init__(self, *args, access_token, **kwargs):
 
-        zenodo.__init__(self, *args, access_token=access_token, **kwargs)
+        super().__init__(self, *args, access_token=access_token, **kwargs)
 
     def list(self, params=None):
         return self._api_request(
@@ -147,7 +147,7 @@ class depositions(zenodo):
 class deposition_files(depositions):
     def __init__(self, *args, access_token, **kwargs):
 
-        depositions.__init__(self, *args, access_token=access_token, **kwargs)
+        super().__init__(self, *args, access_token=access_token, **kwargs)
 
     def list(self):
         resp = self._api_request(
