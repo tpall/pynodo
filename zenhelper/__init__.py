@@ -34,6 +34,7 @@ class Zenodo(metaclass=ABCMeta):
             self._baseurl = "https://sandbox.zenodo.org"
         else:
             self._baseurl = "https://zenodo.org"
+        self._path = "/api/deposit/depositions"
 
         # Check if access token is valid
         try:
@@ -77,7 +78,7 @@ class Zenodo(metaclass=ABCMeta):
 
     @property
     def _try_access(self):
-        return self._api_request(self._baseurl + "/api/deposit/depositions", json=True,)
+        return self._api_request(self._baseurl + self._path, json=True,)
 
 
 class Depositions(Zenodo):
@@ -87,12 +88,12 @@ class Depositions(Zenodo):
 
     def list(self, params=None):
         return self._api_request(
-            self._baseurl + "/api/deposit/depositions", params=params, json=True,
+            self._baseurl + self._path, params=params, json=True,
         )
 
     def create(self, data={}):
         resp = self._api_request(
-            self._baseurl + "/api/deposit/depositions",
+            self._baseurl + self._path,
             method="POST",
             headers={"Content-Type": "application/json"},
             data=json.dumps(data),
@@ -113,7 +114,7 @@ class Depositions(Zenodo):
         except AttributeError as e:
             return "You need to supply deposition id: {}".format(e)
         return self._api_request(
-            self._baseurl + "/api/deposit/depositions/{}".format(d), json=True,
+            self._baseurl + self._path + "/{}".format(d), json=True,
         )
 
     def update(self, data, deposition=None):
@@ -125,7 +126,7 @@ class Depositions(Zenodo):
         except AttributeError as e:
             return "You need to supply deposition id: {}".format(e)
         return self._api_request(
-            self._baseurl + "/api/deposit/depositions/{}".format(d),
+            self._baseurl + self._path + "/{}".format(d),
             method="PUT",
             headers={"Content-Type": "application/json"},
             data=json.dumps(data),
@@ -141,7 +142,7 @@ class Depositions(Zenodo):
         except AttributeError as e:
             return "You need to supply deposition id: {}".format(e)
         resp = self._api_request(
-            self._baseurl + "/api/deposit/depositions/{}".format(d), method="DELETE",
+            self._baseurl + self._path + "/{}".format(d), method="DELETE",
         )
         return resp.status_code
 
@@ -153,7 +154,7 @@ class DepositionFiles(Depositions):
 
     def list(self):
         resp = self._api_request(
-            self._baseurl + "/api/deposit/depositions/{}/files".format(self.deposition),
+            self._baseurl + self._path + "/{}/files".format(self.deposition),
             headers={"Content-Type": "application/json"},
             json=True,
         )
