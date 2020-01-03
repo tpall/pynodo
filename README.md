@@ -4,16 +4,17 @@ Python wrapper for Zenodo API for working with depositions and files.
 
 ## Install
 
-Clone this repo and cd to this directory.
-Package can be installed with:
+Package can be installed like so:
 
 ```python
+git clone git@github.com:tpall/zenapi.git
+cd zenapi
 pip install .
 ```
 
 ## Usage
 
-Zenodo access token with write scope is necessary to access depositions and files. Separate token is neccessary for zenodo sandbox environment <https://sandbox.zenodo.org>. Sandbox can be switched by setting `sandbox=True` when initiating *zenapi* instance.
+Zenodo access token <https://zenodo.org> with write scope is necessary to access depositions and files. Separate token is neccessary for zenodo sandbox environment <https://sandbox.zenodo.org>. Sandbox can be switched by setting `sandbox=True` when initiating *zenapi* instance.
 
 - Depositions can be accessed using `zenapi.Depositions()` class. 
 
@@ -46,7 +47,7 @@ data = {
 new_depo = zen.create(data=data)
 
 # Retrieve deposition info
-ret_depo = zen.retrieve(deposition=new_depo["id"])
+ret_depo = zen.retrieve(deposition=new_depo.id)
 
 # Update deposition metadata
 updates = {
@@ -60,10 +61,10 @@ updates = {
         ],
     }
 }
-updated_depo = zen.update(deposition=new_depo["id"], data=updates)
+updated_depo = zen.update(deposition=new_depo.id, data=updates)
 
 # Delete deposition (status code 204 is success)
-zen.delete(new_depo["id"])
+zen.delete(new_depo.id)
 ```
 
 ### Working with DepositionFiles
@@ -82,11 +83,11 @@ zen = zenapi.Depositions(access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=
 new_depo = zen.create()
 
 # Retrive deposition
-ret_depo = zen.retrieve(deposition=new_depo["id"])
+ret_depo = zen.retrieve(deposition=new_depo.id)
 
 # Create new instance for listing files
 zen_files = zenapi.DepositionFiles(
-    deposition=new_depo["id"],
+    deposition=new_depo.id,
     access_token=os.environ["ZENODO_SANDBOX_PAT"],
     sandbox=True,
 )
