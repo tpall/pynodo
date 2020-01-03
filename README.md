@@ -1,9 +1,14 @@
-# Zenhelper
+# Zenapi
 
 Python wrapper for Zenodo API.
 
 ## Install
 
+Clone this repo and cd to this directory. Package can be installed with:
+
+```python
+pip install .
+```
 
 ## Usage
 
