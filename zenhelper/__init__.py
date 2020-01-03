@@ -35,7 +35,7 @@ class zenodo:
 
         # Check if access token is valid
         try:
-            self.try_access
+            self._try_access
         except Exception as e:
             print(
                 "The Zenodo server could not verify that you are authorized to access your resources. You supplied the wrong credentials (e.g. a bad access_token): {}".format(
@@ -74,7 +74,7 @@ class zenodo:
             return r
 
     @property
-    def try_access(self):
+    def _try_access(self):
         return self._api_request(self._baseurl + "/api/deposit/depositions", json=True,)
 
 
