@@ -5,14 +5,14 @@ __license__ = "MIT"
 
 import os
 import hashlib
-from collections import namedtuple
 import requests
 import json
+from collections import namedtuple
 from requests.exceptions import HTTPError
 from abc import ABCMeta, abstractmethod
 
-
-ZenFileInfo = namedtuple("ZenFileInfo", ["checksum", "filesize", "id", "download"])
+ZenDepoInfo = namedtuple("ZenDepoInfo", "id title bucket")
+ZenFileInfo = namedtuple("ZenFileInfo", "checksum filesize id download")
 
 
 class Zenodo(metaclass=ABCMeta):
@@ -97,11 +97,7 @@ class Depositions(Zenodo):
             data=json.dumps(data),
             json=True,
         )
-        return {
-            "id": resp["id"],
-            "title": resp["title"],
-            "bucket": resp["links"]["bucket"],
-        }
+        return ZenDepoInfo(resp["id"], resp["title"], resp["links"]["bucket"])
 
     def retrieve(self, deposition=None):
         try:

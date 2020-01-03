@@ -29,11 +29,8 @@ data = {
 }
 new_depo = zen.create(data=data)
 
-# Should fail. Try to retrieve deposition info without deposition id
-ret_depo = zen.retrieve()
-
 # Retrieve deposition info
-ret_depo = zen.retrieve(deposition=new_depo["id"])
+ret_depo = zen.retrieve(deposition=new_depo.id)
 
 # Update deposition metadata
 updates = {
@@ -47,4 +44,4 @@ updates = {
         ],
     }
 }
-updated_depo = zen.update(deposition=new_depo["id"], data=updates)
+updated_depo = zen.update(deposition=new_depo.id, data=updates)

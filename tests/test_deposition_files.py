@@ -9,13 +9,11 @@ zen = zenapi.Depositions(access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=
 new_depo = zen.create()
 
 # Retrive deposition
-ret_depo = zen.retrieve(deposition=new_depo["id"])
+ret_depo = zen.retrieve(deposition=new_depo.id)
 
 # Create new instance for listing files
 zen_files = zenapi.DepositionFiles(
-    deposition=new_depo["id"],
-    access_token=os.environ["ZENODO_SANDBOX_PAT"],
-    sandbox=True,
+    deposition=new_depo.id, access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True,
 )
 
 # Upload file
@@ -33,4 +31,4 @@ zen_files.delete("uploaded_file.txt")
 print(zen_files.files)
 
 # Cleanup
-zen.delete(deposition=new_depo["id"])
+zen.delete(deposition=new_depo.id)
