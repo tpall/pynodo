@@ -22,8 +22,10 @@ Sandbox can be switched by setting `sandbox=True` when initiating *zenapi* insta
 
 - Files in a deposition can be accessed using `zenapi.DepositionFiles()` class.
 
-`zenapi.Depositions().create()` and `zenapi.DepositionFiles().files()` return namedtuple.
+- `zenapi.Depositions().create()` and `zenapi.DepositionFiles().files()` return namedtuple.
 Other functions return either json response or status code (delete).
+
+- Actions (e.g. publish, new version, edit) are not implemented.
 
 ### Working with Depositions
 
