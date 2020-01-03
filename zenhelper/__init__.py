@@ -15,7 +15,7 @@ from abc import ABCMeta, abstractmethod
 ZenFileInfo = namedtuple("ZenFileInfo", ["checksum", "filesize", "id", "download"])
 
 
-class zenodo(metaclass=ABCMeta):
+class Zenodo(metaclass=ABCMeta):
     """
     Zenodo personal access token must be passed in as 'access_token' argument.
     Separate registration and access token is needed for Zenodo sandbox
@@ -80,7 +80,7 @@ class zenodo(metaclass=ABCMeta):
         return self._api_request(self._baseurl + "/api/deposit/depositions", json=True,)
 
 
-class depositions(zenodo):
+class Depositions(Zenodo):
     def __init__(self, *args, access_token, **kwargs):
 
         super().__init__(self, *args, access_token=access_token, **kwargs)
@@ -146,7 +146,7 @@ class depositions(zenodo):
         return resp.status_code
 
 
-class deposition_files(depositions):
+class DepositionFiles(Depositions):
     def __init__(self, *args, access_token, **kwargs):
 
         super().__init__(self, *args, access_token=access_token, **kwargs)

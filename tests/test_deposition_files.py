@@ -3,7 +3,7 @@ import os
 import json
 
 # Create zenodo instance
-zen = zenhelper.depositions(access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True)
+zen = zenhelper.Depositions(access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True)
 
 # Create new instance
 new_depo = zen.create()
@@ -12,7 +12,7 @@ new_depo = zen.create()
 ret_depo = zen.retrieve(deposition=new_depo["id"])
 
 # Create new instance for listing files
-zen_files = zenhelper.deposition_files(deposition=new_depo["id"], access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True)
+zen_files = zenhelper.DepositionFiles(deposition=new_depo["id"], access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True)
 
 # Upload file
 zen_files.upload("tests/upload.txt", "uploaded_file.txt")
