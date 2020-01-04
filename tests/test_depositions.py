@@ -62,16 +62,21 @@ def test_depositions_update(depositions_object, test_deposition):
     resp = depositions_object.update(deposition=test_deposition.id, data=updates)
     assert resp["title"] == "Modified upload"
 
+
 # Create new instance for listing files
 @pytest.fixture(scope="module")
 def deposition_files_object(test_deposition):
     return zenapi.DepositionFiles(
-        deposition=test_deposition.id, access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True
+        deposition=test_deposition.id,
+        access_token=os.environ["ZENODO_SANDBOX_PAT"],
+        sandbox=True,
     )
+
 
 LOCAL = "tests/upload.txt"
 UPLOADED = "uploaded_file.txt"
 DOWNLOADED = "tests/uploaded_file.txt"
+
 
 def md5(file):
     local_md5 = hashlib.md5()
@@ -80,20 +85,24 @@ def md5(file):
             local_md5.update(chunk)
     return local_md5.hexdigest()
 
+
 # Upload file
 def test_file_upload(deposition_files_object):
     deposition_files_object.upload(LOCAL, UPLOADED)
     assert deposition_files_object.files[UPLOADED].checksum == md5(LOCAL)
+
 
 # Download file
 def test_file_download(deposition_files_object):
     deposition_files_object.download(UPLOADED, "tests")
     assert deposition_files_object.files[UPLOADED].checksum == md5(DOWNLOADED)
 
+
 # Testing file delete
 def test_file_delete(deposition_files_object):
     resp = deposition_files_object.delete(UPLOADED)
     assert resp == 204
+
 
 # Testing deposition delete
 def test_depositions_delete(depositions_object, test_deposition):
