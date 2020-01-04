@@ -13,15 +13,15 @@ pip install zenapi
 
 ## Usage
 
-Zenodo access token <https://zenodo.org> with write scope is necessary to access depositions and files. 
-Separate token is neccessary for zenodo sandbox environment <https://sandbox.zenodo.org>. 
+[Zenodo](https://zenodo.org) access token with write scope is necessary to access depositions and files.
+Separate token is neccessary for [zenodo sandbox](https://sandbox.zenodo.org) environment.
 Sandbox can be switched by setting `sandbox=True` when initiating *zenapi* instance.
 
-- Depositions can be accessed using `zenapi.Depositions()` class. 
+- Depositions can be accessed using *zenapi.Depositions* class. 
 
-- Files in a deposition can be accessed using `zenapi.DepositionFiles()` class.
+- Files in a deposition can be accessed using *zenapi.DepositionFiles* class.
 
-- `zenapi.Depositions().create()` and `zenapi.DepositionFiles().files()` return namedtuple.
+- *Depositions.create* and *DepositionFiles.files* return namedtuple.
 Other functions return either json response or status code (delete).
 
 - Actions (e.g. publish, new version, edit) are not implemented.
@@ -82,7 +82,7 @@ updates = {
 updated_depo = zen.update(deposition=new_depo.id, data=updates)
 ```
 
-- Delete deposition (status code 204 is success)
+- Delete deposition (status code 204 shows success)
 
 ```python
 zen.delete(new_depo.id)
@@ -140,7 +140,7 @@ files = zen_files.files
 zen_files.download("uploaded_file.txt", "tmp")
 ```
 
-- Delete file (status code 204 is success)
+- Delete file (status code 204 shows success)
 
 ```python
 zen_files.delete("uploaded_file.txt")
