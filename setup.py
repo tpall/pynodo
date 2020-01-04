@@ -12,8 +12,11 @@ setuptools.setup(
     url="https://github.com/tpall/zenapi",
     author="Taavi Päll",
     author_email="tapa741@gmail.com",
-    license="MIT",
     packages=setuptools.find_packages(),
-    install_requires=["requests"],
-    zip_safe=False,
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ],
+    python_requires='>=3.5',
 )
