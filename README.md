@@ -5,14 +5,10 @@
 
 Python wrapper for Zenodo REST API for working with Zenodo depositions and files.
 
-## Install
-
-Package can be installed like so:
+## Installation
 
 ```python
-git clone git@github.com:tpall/zenapi.git
-cd zenapi
-pip install .
+pip install zenapi
 ```
 
 ## Usage
@@ -34,18 +30,24 @@ Other functions return either json response or status code (delete).
 
 Zenapi allows listing, creating, retrieving, updating and deleting of depostions.
 
+- Create zenodo (sandbox) instance
+
 ```python
 import zenapi
 import os
-import json
 
-# Create zenodo (sandbox) instance
 zen = zenapi.Depositions(access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True)
+```
 
-# List user depositions
+- List user depositions
+
+```python
 depos = zen.list(params={"size": 50})
+```
 
-# Create a new deposition with some metadata
+- Create a new deposition with some metadata
+
+```python
 data = {
     "metadata": {
         "title": "My first upload",
@@ -55,11 +57,17 @@ data = {
     }
 }
 new_depo = zen.create(data=data)
+```
 
-# Retrieve deposition info
+- Retrieve deposition info
+
+```python
 ret_depo = zen.retrieve(deposition=new_depo.id)
+```
 
-# Update deposition metadata
+- Update deposition metadata
+
+```python
 updates = {
     "metadata": {
         "title": "Modified upload",
@@ -72,8 +80,11 @@ updates = {
     }
 }
 updated_depo = zen.update(deposition=new_depo.id, data=updates)
+```
 
-# Delete deposition (status code 204 is success)
+- Delete deposition (status code 204 is success)
+
+```python
 zen.delete(new_depo.id)
 ```
 
@@ -81,36 +92,56 @@ zen.delete(new_depo.id)
 
 Zenapi allows listing, uploading, downloading and deleting of files in a deposition.
 
+- Create zenodo (sandbox) instance
+
 ```python
 import zenapi
 import os
-import json
-
-# Create zenodo (sandbox) instance
 zen = zenapi.Depositions(access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True)
+```
 
-# Create new deposition
+- Create new deposition
+
+```python
 new_depo = zen.create()
+```
 
-# Retrive deposition
+- Retrive deposition
+
+```python
 ret_depo = zen.retrieve(deposition=new_depo.id)
+```
 
-# Create new instance for listing files
+- Create new instance for listing files
+
+```python
 zen_files = zenapi.DepositionFiles(
     deposition=new_depo.id,
     access_token=os.environ["ZENODO_SANDBOX_PAT"],
     sandbox=True,
 )
+```
 
-# Upload file (second argument with new file name is optional)
+- Upload file (second argument with new file name is optional)
+
+```python
 zen_files.upload("tests/upload.txt", "uploaded_file.txt")
+```
 
-# List files in deposition
+- List files in deposition
+
+```python
 files = zen_files.files
+```
 
-# Download file from deposition (second argument with download folder is optional)
+- Download file from deposition (second argument with download folder is optional)
+
+```python
 zen_files.download("uploaded_file.txt", "tmp")
+```
 
-# Delete file (status code 204 is success)
+- Delete file (status code 204 is success)
+
+```python
 zen_files.delete("uploaded_file.txt")
 ```
