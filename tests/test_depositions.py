@@ -3,6 +3,7 @@ import os
 import pytest
 import hashlib
 
+
 # Should fail: calling base class
 def test_zenapi_zenodo():
     with pytest.raises(Exception):
@@ -33,20 +34,19 @@ def test_deposition(depositions_object):
 
 # Create a new deposition with some metadata
 def test_depositions_create(test_deposition):
-    resp = test_deposition
-    assert "Test" in resp
-
-
-# List user depositions
-def test_depositions_list(depositions_object):
-    resp = depositions_object.list(params={"size": 1})
-    assert len(resp) == 1
+    assert "Test" in test_deposition
 
 
 # Testing deposition retrieve
 def test_depositions_retrieve(depositions_object, test_deposition):
     resp = depositions_object.retrieve(test_deposition.id)
     assert resp["id"] == test_deposition.id
+
+
+# List user depositions
+def test_depositions_list(depositions_object):
+    resp = depositions_object.list(params={"size": 1})
+    assert len(resp) == 1
 
 
 # Update deposition metadata
