@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="zenapi",
+    name="pynodo",
     version="0.2",
     description="Python wrapper for Zenodo REST API",
     long_description=long_description,

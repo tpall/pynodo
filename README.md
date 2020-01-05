@@ -1,25 +1,25 @@
 
-![](https://github.com/tpall/zenapi/workflows/CI/badge.svg)[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=tpall_zenapi&metric=alert_status)](https://sonarcloud.io/dashboard?id=tpall_zenapi)
+![](https://github.com/tpall/pynodo/workflows/CI/badge.svg)[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=tpall_pynodo&metric=alert_status)](https://sonarcloud.io/dashboard?id=tpall_pynodo)
 
-# Zenapi -- manage your Zenodo depositions
+# Pynodo -- manage your Zenodo depositions
 
 Python wrapper for Zenodo REST API for working with Zenodo depositions and files.
 
 ## Installation
 
 ```python
-pip install zenapi
+pip install pynodo
 ```
 
 ## Usage
 
 [Zenodo](https://zenodo.org) access token with write scope is necessary to access depositions and files.
 Separate token is neccessary for [zenodo sandbox](https://sandbox.zenodo.org) environment.
-Sandbox can be switched by setting `sandbox=True` when initiating *zenapi* instance.
+Sandbox can be switched by setting `sandbox=True` when initiating *pynodo* instance.
 
-- Depositions can be accessed using *zenapi.Depositions* class. 
+- Depositions can be accessed using *pynodo.Depositions* class. 
 
-- Files in a deposition can be accessed using *zenapi.DepositionFiles* class.
+- Files in a deposition can be accessed using *pynodo.DepositionFiles* class.
 
 - *Depositions.create* and *DepositionFiles.files* return namedtuple and list of namedtuples, respectively.
 Other functions return either json response or status code (delete).
@@ -28,15 +28,15 @@ Other functions return either json response or status code (delete).
 
 ### Working with Depositions
 
-Zenapi allows listing, creating, retrieving, updating and deleting of depostions.
+pynodo allows listing, creating, retrieving, updating and deleting of depostions.
 
 - Create zenodo (sandbox) instance
 
 ```python
-import zenapi
+import pynodo
 import os
 
-zen = zenapi.Depositions(access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True)
+zen = pynodo.Depositions(access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True)
 ```
 
 - List user depositions
@@ -90,14 +90,14 @@ zen.delete(new_depo.id)
 
 ### Working with DepositionFiles
 
-Zenapi allows listing, uploading, downloading and deleting of files in a deposition.
+pynodo allows listing, uploading, downloading and deleting of files in a deposition.
 
 - Create zenodo (sandbox) instance
 
 ```python
-import zenapi
+import pynodo
 import os
-zen = zenapi.Depositions(access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True)
+zen = pynodo.Depositions(access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True)
 ```
 
 - Create new deposition
@@ -115,7 +115,7 @@ ret_depo = zen.retrieve(deposition=new_depo.id)
 - Create new instance for listing files
 
 ```python
-zen_files = zenapi.DepositionFiles(
+zen_files = pynodo.DepositionFiles(
     deposition=new_depo.id,
     access_token=os.environ["ZENODO_SANDBOX_PAT"],
     sandbox=True,
