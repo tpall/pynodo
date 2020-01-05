@@ -20,7 +20,7 @@ jobs:
         run: |
           export PATH="/usr/share/miniconda/bin:$PATH"
           source activate black
-          black --check setup.py zenapi tests/*.py
+          black --check setup.py pynodo tests/*.py
 
       - name: Comment PR
         if: github.event_name == 'pull_request' && failure()

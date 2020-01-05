@@ -1,19 +1,19 @@
-import zenapi
+import pynodo
 import os
 import pytest
 import hashlib
 
 
 # Should fail: calling base class
-def test_zenapi_zenodo():
+def test_zenodo():
     with pytest.raises(Exception):
-        zenapi.Zenodo(access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True)
+        pynodo.Zenodo(access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True)
 
 
 # Creating zenodo (sandbox) depositions instance for tests
 @pytest.fixture(scope="module")
 def depositions_object():
-    return zenapi.Depositions(
+    return pynodo.Depositions(
         access_token=os.environ["ZENODO_SANDBOX_PAT"], sandbox=True
     )
 
@@ -66,7 +66,7 @@ def test_depositions_update(depositions_object, test_deposition):
 # Create new instance for listing files
 @pytest.fixture(scope="module")
 def deposition_files_object(test_deposition):
-    return zenapi.DepositionFiles(
+    return pynodo.DepositionFiles(
         deposition=test_deposition.id,
         access_token=os.environ["ZENODO_SANDBOX_PAT"],
         sandbox=True,
