@@ -1,5 +1,5 @@
 
-![](https://github.com/tpall/pynodo/workflows/CI/badge.svg)[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=tpall_zenapi&metric=alert_status)](https://sonarcloud.io/dashboard?id=tpall_zenapi)
+![](https://github.com/tpall/pynodo/workflows/CI/badge.svg)[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=tpall_zenapi&metric=alert_status)](https://sonarcloud.io/dashboard?id=tpall_zenapi)[![DOI](https://zenodo.org/badge/231588382.svg)](https://zenodo.org/badge/latestdoi/231588382)
 
 # Pynodo -- manage your Zenodo depositions
 
