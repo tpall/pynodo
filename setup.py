@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pynodo",
-    version="v0.2.1",
+    version="v0.2.2",
     description="Python wrapper for Zenodo REST API",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -18,5 +18,6 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
+    install_requires=["requests"],
     python_requires=">=3.5",
 )
